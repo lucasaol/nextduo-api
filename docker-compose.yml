@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: db_duo
+    container_name: duo_db
     image: postgres:16-alpine
     restart: unless-stopped
     ports:
