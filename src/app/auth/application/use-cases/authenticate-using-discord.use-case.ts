@@ -1,7 +1,7 @@
 import { DiscordService, DiscordUser } from "../services/discord.service";
 import { Injectable } from "@nestjs/common";
 import { AuthWithDiscordDto } from "../../request/auth-with-discord.dto";
-import { UserService } from "../../../users/application/user.service";
+import { UserService } from "../../../users/application/services/user.service";
 import { CreateUserDto } from "../../../users/request/create-user.dto";
 import { User } from "../../../users/domain/user.entity";
 import { JwtService } from "@nestjs/jwt";
