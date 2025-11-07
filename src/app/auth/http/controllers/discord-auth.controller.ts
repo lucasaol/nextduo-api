@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { AuthWithDiscordDto } from "../../dto/auth-with-discord.dto";
-import { AuthenticateUsingDiscordUseCase } from "../../application/use-cases/authenticate-using-discord.use-case";
+import { AuthenticateUsingDiscordUseCase } from "@app/auth/application/use-cases/authenticate-using-discord.use-case";
+import { AuthWithDiscordDto } from "@app/auth/dto/auth-with-discord.dto";
 
 @Controller("auth/discord")
 export class DiscordAuthController {

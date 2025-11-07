@@ -1,12 +1,13 @@
 import { Module } from "@nestjs/common";
-import { DiscordAuthController } from "./http/controllers/discord-auth.controller";
-import { AuthenticateUsingDiscordUseCase } from "./application/use-cases/authenticate-using-discord.use-case";
-import { DiscordService } from "./application/services/discord.service";
-import { UsersModule } from "../users/users.module";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { Env } from "../../env";
+import { Env } from "@src/env";
+import { UsersModule } from "@app/users/users.module";
+import { DiscordAuthController } from "@app/auth/http/controllers/discord-auth.controller";
+import { AuthenticateUsingDiscordUseCase } from "@app/auth/application/use-cases/authenticate-using-discord.use-case";
+import { DiscordService } from "@app/auth/application/services/discord.service";
+import { JwtStrategy } from "@app/auth/helpers/strategies/jwt.strategy";
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { Env } from "../../env";
   controllers: [DiscordAuthController],
   providers: [
     AuthenticateUsingDiscordUseCase,
-    DiscordService
+    DiscordService,
+    JwtStrategy
   ]
 })
 export class AuthModule {}
