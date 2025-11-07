@@ -1,20 +1,24 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ConfigService } from "@nestjs/config";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Env } from "@src/env";
 import { z } from "zod";
+import { UserService } from "@app/users/application/services/user.service";
 
-const tokenPayloadSchema = z.object({
+const jwtPayloadSchema = z.object({
   sub: z.uuid()
 });
 
-export type UserPayload = z.infer<typeof tokenPayloadSchema>;
+export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
-  constructor(config: ConfigService<Env, true>) {
+  constructor(
+    private readonly users: UserService,
+    config: ConfigService<Env, true>
+  ) {
     const publicKey = config.get('JWT_PUBLIC_KEY', { infer: true});
 
     super({
@@ -24,7 +28,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: UserPayload) {
-    return tokenPayloadSchema.parse(payload);
+  async validate(jwt: JwtPayload) {
+    const payload = jwtPayloadSchema.parse(jwt);
+    const user = await this.users.findById(payload.sub);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return user;
   }
 }

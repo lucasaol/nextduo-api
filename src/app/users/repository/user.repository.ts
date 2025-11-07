@@ -13,12 +13,14 @@ export class UserRepository {
     private readonly orm: Repository<User>,
   ) { }
 
-  async all(): Promise<User[]> {
-    return await this.orm.find();
-  }
-
   async create(user: CreateUserDto): Promise<User> {
     return await this.orm.save(plainToInstance(User, user));
+  }
+
+  async findById(id: string): Promise<User|null> {
+    return await this.orm.findOne({
+      where: { id }
+    });
   }
 
   async findByDiscordId(id: string): Promise<User|null> {

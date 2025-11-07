@@ -14,6 +14,10 @@ export class UserService {
     return this.repo.create(user);
   }
 
+  async findById(id: string): Promise<User|null> {
+    return this.repo.findById(id);
+  }
+
   async findByDiscordId(id: string): Promise<User|null> {
     return this.repo.findByDiscordId(id);
   }
