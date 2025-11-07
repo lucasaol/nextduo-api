@@ -9,10 +9,16 @@ export class User {
   name: string;
 
   @Column()
+  email?: string;
+
+  @Column()
   avatar?: string;
 
   @Column()
   bio?: string;
+
+  @Column()
+  discord_id: string;
 
   @CreateDateColumn()
   created_at: Date;

@@ -7,11 +7,13 @@ export class CreateUsersTable1762442608915 implements MigrationInterface {
         new Table({
           name: "users",
           columns: [
-            { name: "id", type: "uuid", isPrimary: true, generationStrategy: "uuid", default: "uuid_generate_v4()" },
-            { name: "name", type: "varchar" },
-            { name: "avatar", type: "varchar", isNullable: true },
-            { name: "bio", type: "varchar", isNullable: true },
-            { name: "created_at", type: "timestamp", default: 'now()' },
+            { name: "id", type: "uuid", isPrimary: true, generationStrategy: "uuid", isNullable: false, default: "uuid_generate_v4()" },
+            { name: "name", type: "varchar", length: "255", isNullable: false },
+            { name: "email", type: "varchar", length: "255", isNullable: true },
+            { name: "avatar", type: "varchar", length: "255", isNullable: true },
+            { name: "bio", type: "varchar", length: "255", isNullable: true },
+            { name: "discord_id", type: "varchar", length: "255", isNullable: false },
+            { name: "created_at", type: "timestamp", default: 'now()', isNullable: false },
             { name: "updated_at", type: "timestamp", isNullable: true },
           ]
         })

@@ -15,8 +15,11 @@ export class UserService {
   }
 
   async create(user: CreateUserDto): Promise<User> {
-    return await this.repo.create(user);
+    return this.repo.create(user);
   }
 
+  async findByDiscordId(id: string): Promise<User|null> {
+    return this.repo.findByDiscordId(id);
+  }
 
 }
