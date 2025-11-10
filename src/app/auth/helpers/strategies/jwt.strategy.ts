@@ -5,10 +5,12 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { Env } from "@src/env";
 import { z } from "zod";
 import { UserService } from "@app/users/application/services/user.service";
+import { UserRole } from "@app/users/enums/user-role.enum";
 
 const jwtPayloadSchema = z.object({
   sub: z.uuid(),
-  name: z.string()
+  name: z.string(),
+  role: z.enum(UserRole)
 });
 
 export type JwtPayload = z.infer<typeof jwtPayloadSchema>;

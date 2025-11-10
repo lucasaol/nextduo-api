@@ -5,6 +5,7 @@ import { UserService } from "@app/users/application/services/user.service";
 import { CreateUserDto } from "@app/users/dto/create-user.dto";
 import { User } from "@app/users/domain/user.entity";
 import { JwtService } from "@nestjs/jwt";
+import { JwtPayload } from "@app/auth/helpers/strategies/jwt.strategy";
 
 @Injectable()
 export class AuthenticateUsingDiscordUseCase {
@@ -24,10 +25,12 @@ export class AuthenticateUsingDiscordUseCase {
       user = await this.createUserWithDiscordInfo(discordUser);
     }
 
-    return this.jwt.sign({
+    const payload: JwtPayload = {
       sub: user.id,
-      name: user.name
-    });
+      name: user.name,
+      role: user.role,
+    };
+    return this.jwt.sign(payload);
   }
 
   private async createUserWithDiscordInfo(discordUser: DiscordUser): Promise<User> {
