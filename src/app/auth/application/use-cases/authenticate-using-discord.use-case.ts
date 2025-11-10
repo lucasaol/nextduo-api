@@ -23,8 +23,10 @@ export class AuthenticateUsingDiscordUseCase {
     if (!user) {
       user = await this.createUserWithDiscordInfo(discordUser);
     }
+
     return this.jwt.sign({
-      sub: user.id
+      sub: user.id,
+      name: user.name
     });
   }
 

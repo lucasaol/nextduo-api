@@ -7,7 +7,8 @@ import { z } from "zod";
 import { UserService } from "@app/users/application/services/user.service";
 
 const jwtPayloadSchema = z.object({
-  sub: z.uuid()
+  sub: z.uuid(),
+  name: z.string()
 });
 
 export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
