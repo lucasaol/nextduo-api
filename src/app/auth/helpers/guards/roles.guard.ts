@@ -2,7 +2,7 @@ import { ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common
 import { Reflector } from '@nestjs/core';
 import { UserRole } from '@app/users/enums/user-role.enum';
 import { ROLES_KEY } from '@app/auth/helpers/decorators/roles.decorator';
-import { isObservable, lastValueFrom, Observable } from 'rxjs';
+import { isObservable, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '@app/auth/helpers/guards/jwt-auth.guard';
 
 @Injectable()
