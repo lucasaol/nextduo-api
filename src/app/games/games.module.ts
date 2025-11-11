@@ -4,23 +4,28 @@ import { GameService } from "@app/games/application/services/game.service";
 import { GameRepository } from "@app/games/domain/repositories/game.repository";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Game } from "@app/games/domain/entities/game.entity";
-import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
-import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
-import { RankController } from "@app/games/http/controllers/rank.controller";
-import { Rank } from "@app/games/domain/entities/rank.entity";
-import { RankRepository } from "@app/games/domain/repositories/rank.repository";
-import { RankService } from "@app/games/application/services/rank.service";
-import { LoadGameInterceptor } from "@app/games/interceptors/load-game.interceptor";
+import { CreateGameUseCase } from "@app/games/application/use-cases/create-game.use-case";
+import { UpdateGameUseCase } from "@app/games/application/use-cases/update-game.use-case";
+import { LoadGameInterceptor } from "@app/games/helpers/interceptors/load-game.interceptor";
+import { RanksModule } from "@app/games/ranks/ranks.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Game, Rank])],
+  imports: [
+    TypeOrmModule.forFeature([Game]),
+    RanksModule
+  ],
   controllers: [
-    GameController,
-    RankController
+    GameController
   ],
   providers: [
-    GameRepository, GameService, CreateGameUseCase, UpdateGameUseCase,
-    RankRepository, RankService,
+    GameService,
+    GameRepository,
+    CreateGameUseCase,
+    UpdateGameUseCase,
+    LoadGameInterceptor
+  ],
+  exports: [
+    GameService,
     LoadGameInterceptor
   ]
 })

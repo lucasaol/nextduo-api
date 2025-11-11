@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
-import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
+import { CreateGameDto } from "@app/games/dto/create-game.dto";
 
 @Injectable()
 export class CreateGameUseCase {

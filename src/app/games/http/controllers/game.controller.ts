@@ -3,13 +3,13 @@ import { GameService } from "@app/games/application/services/game.service";
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { UserRole } from "@app/users/enums/user-role.enum";
 import { Roles } from "@app/auth/helpers/decorators/roles.decorator";
-import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
-import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
-import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
-import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
-import { CurrentGame } from "@app/games/decorators/current-game.decorator";
+import { CreateGameDto } from "@app/games/dto/create-game.dto";
+import { UpdateGameDto } from "@app/games/dto/update-game.dto";
+import { CreateGameUseCase } from "@app/games/application/use-cases/create-game.use-case";
+import { UpdateGameUseCase } from "@app/games/application/use-cases/update-game.use-case";
+import { CurrentGame } from "@app/games/helpers/decorators/current-game.decorator";
 import { Game } from "@app/games/domain/entities/game.entity";
-import { LoadGameInterceptor } from "@app/games/interceptors/load-game.interceptor";
+import { LoadGameInterceptor } from "@app/games/helpers/interceptors/load-game.interceptor";
 
 @Controller('games')
 @UseGuards(RolesGuard)
