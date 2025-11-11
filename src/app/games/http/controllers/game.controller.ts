@@ -8,7 +8,7 @@ import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
 import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
 import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
 
-@Controller('game')
+@Controller('games')
 @UseGuards(RolesGuard)
 export class GameController {
 

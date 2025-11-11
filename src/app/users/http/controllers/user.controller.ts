@@ -3,7 +3,7 @@ import { JwtAuthGuard } from '@app/auth/helpers/guards/jwt-auth.guard';
 import { CurrentUser } from '@app/auth/helpers/decorators/current-user.decorator';
 import { User } from '@app/users/domain/entities/user.entity';
 
-@Controller('user')
+@Controller('users')
 @UseGuards(JwtAuthGuard)
 export class UserController {
 
