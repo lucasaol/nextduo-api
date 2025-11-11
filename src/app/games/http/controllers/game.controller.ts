@@ -3,8 +3,8 @@ import { GameService } from "@app/games/application/services/game.service";
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { UserRole } from "@app/users/enums/user-role.enum";
 import { Roles } from "@app/auth/helpers/decorators/roles.decorator";
-import { CreateGameDto } from "@app/games/dto/create-game.dto";
-import { UpdateGameDto } from "@app/games/dto/update-game.dto";
+import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
+import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
 import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
 import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
 

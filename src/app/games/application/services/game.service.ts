@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { GameRepository } from "@app/games/domain/repositories/game.repository";
 import { Game } from "@app/games/domain/entities/game.entity";
 import { plainToInstance } from "class-transformer";
-import { CreateGameDto } from "@app/games/dto/create-game.dto";
+import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
 
 @Injectable()
 export class GameService {

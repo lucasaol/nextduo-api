@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
-import { UpdateGameDto } from "@app/games/dto/update-game.dto";
+import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
 
 @Injectable()
 export class UpdateGameUseCase {
