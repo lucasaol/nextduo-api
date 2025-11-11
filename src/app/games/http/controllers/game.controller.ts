@@ -1,9 +1,11 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
-import { JwtAuthGuard } from "@app/auth/helpers/guards/jwt-auth.guard";
+import { Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
+import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
+import { UserRole } from "@app/users/enums/user-role.enum";
+import { Roles } from "@app/auth/helpers/decorators/roles.decorator";
 
 @Controller('game')
-@UseGuards(JwtAuthGuard)
+@UseGuards(RolesGuard)
 export class GameController {
 
   constructor(
@@ -13,5 +15,13 @@ export class GameController {
   @Get()
   async findAll() {
     return await this.gameService.findAll();
+  }
+
+  @Post()
+  @Roles(UserRole.ROOT)
+  async create() {
+    return {
+      ok: true
+    }
   }
 }
