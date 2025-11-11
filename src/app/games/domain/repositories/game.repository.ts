@@ -19,10 +19,12 @@ export class GameRepository {
   }
 
   async findById(id: string): Promise<Game|null> {
-    return await this.orm.findOne({
-      where: { id },
-      relations: ['ranks']
-    });
+    return await this.orm
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.ranks', 'rank')
+      .where('game.id = :id', { id })
+      .orderBy('rank.order', 'ASC')
+      .getOne();
   }
 
   async create(game: Game): Promise<Game> {

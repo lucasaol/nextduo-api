@@ -1,6 +1,13 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+  NotFoundException
+} from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
-import { Observable } from "rxjs";
+import { isUUID } from "class-validator";
 
 @Injectable()
 export class LoadGameInterceptor implements NestInterceptor {
@@ -12,6 +19,9 @@ export class LoadGameInterceptor implements NestInterceptor {
    intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const gameId = request.params.gameId;
+    if (!isUUID(gameId)) {
+      throw new BadRequestException('Validation failed (uuid is expected)');
+    }
 
     const game = this.gameService.findById(gameId);
     if (!game) {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, UseGuards, UseInterceptors } from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { UserRole } from "@app/users/enums/user-role.enum";
@@ -7,7 +7,9 @@ import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
 import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
 import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
 import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
-import { UuidParam } from "@app/shared/validator/decorators/uuid-param.decorator";
+import { CurrentGame } from "@app/games/decorators/current-game.decorator";
+import { Game } from "@app/games/domain/entities/game.entity";
+import { LoadGameInterceptor } from "@app/games/interceptors/load-game.interceptor";
 
 @Controller('games')
 @UseGuards(RolesGuard)
@@ -24,11 +26,13 @@ export class GameController {
     return await this.gameService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@UuidParam() id: string) {
-    return await this.gameService.findById(id);
+  @Get(':gameId')
+  @UseInterceptors(LoadGameInterceptor)
+  async findOne(
+    @CurrentGame() game: Game
+  ) {
+    return game;
   }
-
 
   @Post()
   @Roles(UserRole.ROOT)
@@ -40,10 +44,11 @@ export class GameController {
 
   @Patch(':id')
   @Roles(UserRole.ROOT)
+  @UseInterceptors(LoadGameInterceptor)
   async update(
-    @UuidParam() id: string,
+    @CurrentGame() game: Game,
     @Body() body: UpdateGameDto
   ) {
-    return await this.updateGame.execute(id, body);
+    return await this.updateGame.execute(game, body);
   }
 }

@@ -8,7 +8,6 @@ import { CreateGameUseCase } from "@app/games/application/use-cases/games/create
 import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
 import { RankController } from "@app/games/http/controllers/rank.controller";
 import { Rank } from "@app/games/domain/entities/rank.entity";
-import { FindRanksByGameUseCase } from "@app/games/application/use-cases/ranks/find-ranks-by-game.use-case";
 import { RankRepository } from "@app/games/domain/repositories/rank.repository";
 import { RankService } from "@app/games/application/services/rank.service";
 import { LoadGameInterceptor } from "@app/games/interceptors/load-game.interceptor";
@@ -21,7 +20,7 @@ import { LoadGameInterceptor } from "@app/games/interceptors/load-game.intercept
   ],
   providers: [
     GameRepository, GameService, CreateGameUseCase, UpdateGameUseCase,
-    RankRepository, RankService, FindRanksByGameUseCase,
+    RankRepository, RankService,
     LoadGameInterceptor
   ]
 })
