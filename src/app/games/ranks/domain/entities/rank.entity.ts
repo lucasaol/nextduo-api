@@ -28,6 +28,9 @@ export class Rank {
   @JoinColumn({ name: 'game_id' })
   game: Game;
 
+  @Column()
+  order: number;
+
   @CreateDateColumn()
   created_at: Date;
 

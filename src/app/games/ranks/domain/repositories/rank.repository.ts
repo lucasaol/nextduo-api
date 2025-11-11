@@ -14,4 +14,15 @@ export class RankRepository {
   async create(rank: Rank): Promise<Rank> {
     return await this.orm.save(rank);
   }
+
+  async findByGameId(gameId: string): Promise<Rank[]> {
+    return await this.orm.find({
+      where: { game_id: gameId},
+      order: { order: 'ASC' }
+    });
+  }
+
+  async saveMany(ranks: Rank[]): Promise<Rank[]> {
+    return await this.orm.save(ranks);
+  }
 }

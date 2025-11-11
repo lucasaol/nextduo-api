@@ -5,6 +5,7 @@ import { GamesModule } from "@app/games/games.module";
 import { RankController } from "@app/games/ranks/http/controllers/rank.controller";
 import { RankService } from "@app/games/ranks/application/services/rank.service";
 import { RankRepository } from "@app/games/ranks/domain/repositories/rank.repository";
+import { ReorderRanksUseCase } from "@app/games/ranks/application/use-cases/reorder-ranks.use-case";
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { RankRepository } from "@app/games/ranks/domain/repositories/rank.reposi
   ],
   providers: [
     RankService,
-    RankRepository
+    RankRepository,
+    ReorderRanksUseCase
   ]
 })
 export class RanksModule {}

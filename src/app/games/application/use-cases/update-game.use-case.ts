@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { GameService } from "@app/games/application/services/game.service";
 import { UpdateGameDto } from "@app/games/dto/update-game.dto";
 import { Game } from "@app/games/domain/entities/game.entity";

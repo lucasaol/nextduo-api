@@ -14,4 +14,12 @@ export class RankService {
   async create(rank: CreateRankDto): Promise<Rank> {
     return this.repo.create(plainToInstance(Rank, rank));
   }
+
+  async findByGameId(gameId: string): Promise<Rank[]> {
+    return this.repo.findByGameId(gameId);
+  }
+
+  async saveMany(ranks: Rank[]): Promise<Rank[]> {
+    return this.repo.saveMany(ranks);
+  }
 }
