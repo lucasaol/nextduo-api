@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Rank } from "@app/games/domain/entities/rank.entity";
 
 @Entity('games')
 export class Game {
@@ -11,6 +12,9 @@ export class Game {
 
   @Column()
   image: string;
+
+  @OneToMany(() => Rank, (rank) => rank.game)
+  ranks: Rank[];
 
   @CreateDateColumn()
   created_at: Date;

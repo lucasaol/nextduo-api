@@ -12,12 +12,16 @@ export class GameRepository {
   ) { }
 
   async findAll(): Promise<Game[]> {
-    return await this.orm.find();
+    return await this.orm
+      .createQueryBuilder('game')
+      .orderBy('LOWER(game.name)', 'ASC')
+      .getMany();
   }
 
   async findById(id: string): Promise<Game|null> {
     return await this.orm.findOne({
-      where: { id }
+      where: { id },
+      relations: ['ranks']
     });
   }
 

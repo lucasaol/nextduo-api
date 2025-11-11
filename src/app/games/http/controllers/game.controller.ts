@@ -7,6 +7,7 @@ import { CreateGameDto } from "@app/games/dto/game/create-game.dto";
 import { UpdateGameDto } from "@app/games/dto/game/update-game.dto";
 import { CreateGameUseCase } from "@app/games/application/use-cases/games/create-game.use-case";
 import { UpdateGameUseCase } from "@app/games/application/use-cases/games/update-game.use-case";
+import { UuidParam } from "@app/shared/validator/decorators/uuid-param.decorator";
 
 @Controller('games')
 @UseGuards(RolesGuard)
@@ -23,6 +24,12 @@ export class GameController {
     return await this.gameService.findAll();
   }
 
+  @Get(':id')
+  async findOne(@UuidParam() id: string) {
+    return await this.gameService.findById(id);
+  }
+
+
   @Post()
   @Roles(UserRole.ROOT)
   async create(
@@ -34,7 +41,7 @@ export class GameController {
   @Patch(':id')
   @Roles(UserRole.ROOT)
   async update(
-    @Param('id') id: string,
+    @UuidParam() id: string,
     @Body() body: UpdateGameDto
   ) {
     return await this.updateGame.execute(id, body);
