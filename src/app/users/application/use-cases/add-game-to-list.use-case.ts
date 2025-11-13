@@ -3,13 +3,13 @@ import { User } from "@app/users/domain/entities/user.entity";
 import { Game } from "@app/games/domain/entities/game.entity";
 import { AddGameToListDto } from "@app/users/dto/add-game-to-list.dto";
 import { Gamelist } from "@app/users/domain/entities/gamelist.entity";
-import { GamelistRepository } from "@app/users/domain/repositories/gamelist.repository";
+import { GamelistService } from "@app/users/application/services/gamelist.service";
 
 @Injectable()
 export class AddGameToListUseCase {
 
   constructor(
-    private readonly repo: GamelistRepository
+    private readonly service: GamelistService
   ) {}
 
   async execute(
@@ -22,12 +22,17 @@ export class AddGameToListUseCase {
       throw new BadRequestException("Invalid rank");
     }
 
+    const existingGame = await this.service.findByUserAndGame(user, game);
+    if (existingGame) {
+      throw new BadRequestException("Game is already in list");
+    }
+
     const newGame = new Gamelist();
     newGame.user_id = user.id;
     newGame.game_id = game.id;
     newGame.rank_id = rank.id;
 
-    await this.repo.add(newGame);
+    await this.service.add(newGame);
   }
 
 }

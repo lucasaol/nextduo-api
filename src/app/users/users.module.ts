@@ -10,6 +10,7 @@ import { GamesModule } from '@app/games/games.module';
 import { AddGameToListUseCase } from '@app/users/application/use-cases/add-game-to-list.use-case';
 import { GamelistService } from "@app/users/application/services/gamelist.service";
 import { GamelistRepository } from "@app/users/domain/repositories/gamelist.repository";
+import { RemoveGameFromListUseCase } from "@app/users/application/use-cases/remove-game-from-list.use-case-ts";
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { GamelistRepository } from "@app/users/domain/repositories/gamelist.repo
   controllers: [UserController, GameListController],
   providers: [
     UserService, UserRepository,
-    GamelistService, GamelistRepository, AddGameToListUseCase
+    GamelistService, GamelistRepository, AddGameToListUseCase, RemoveGameFromListUseCase
   ],
   exports: [UserService],
 })

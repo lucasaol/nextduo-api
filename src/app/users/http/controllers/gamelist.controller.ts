@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards, UseInterceptors, HttpCode, HttpStatus } from "@nestjs/common";
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { CurrentUser } from "@app/auth/helpers/decorators/current-user.decorator";
 import { User } from "@app/users/domain/entities/user.entity";
@@ -7,13 +7,15 @@ import { CurrentGame } from "@app/games/helpers/decorators/current-game.decorato
 import { Game } from "@app/games/domain/entities/game.entity";
 import { LoadGameInterceptor } from '@app/games/helpers/interceptors/load-game.interceptor';
 import { AddGameToListUseCase } from '@app/users/application/use-cases/add-game-to-list.use-case';
+import { RemoveGameFromListUseCase } from "@app/users/application/use-cases/remove-game-from-list.use-case-ts";
 
 @Controller("users/games")
 @UseGuards(RolesGuard)
 export class GameListController {
 
   constructor(
-    private readonly addGame: AddGameToListUseCase
+    private readonly addGame: AddGameToListUseCase,
+    private readonly removeGame: RemoveGameFromListUseCase
   ) {
   }
 
@@ -30,6 +32,15 @@ export class GameListController {
     @Body() body: AddGameToListDto
   ) {
     await this.addGame.execute(user, game, body);
-    return { success: true };
+  }
+
+  @Delete(':gameId')
+  @UseInterceptors(LoadGameInterceptor)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
+    @CurrentUser() user: User,
+    @CurrentGame() game: Game,
+  ) {
+    await this.removeGame.execute(user, game);
   }
 }
