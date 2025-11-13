@@ -1,10 +1,15 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from "@nestjs/core";
 import { AppModule } from './app.module';
 import { ConfigService } from "@nestjs/config";
 import { Env } from "./env";
+import { ClassSerializerInterceptor } from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector))
+  )
 
   const configService = app.get<ConfigService<Env, true>>(ConfigService);
   const port = configService.get('PORT', { infer: true});

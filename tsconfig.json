@@ -19,7 +19,6 @@
       "@app/*": ["src/app/*"]
     },
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,

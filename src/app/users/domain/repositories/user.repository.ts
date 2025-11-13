@@ -19,8 +19,14 @@ export class UserRepository {
 
   async findById(id: string): Promise<User|null> {
     return await this.orm.findOne({
-      where: { id }
-    });
+        where: { id },
+        relations: {
+          gameList: {
+            game: true,
+            rank: true
+          },
+        },
+      });
   }
 
   async findByDiscordId(id: string): Promise<User|null> {

@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/app
+      - ./src:/app/src
     networks:
       - duo-network
     depends_on:

@@ -1,8 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn,} from "typeorm";
 import { UserRole } from "@app/users/enums/user-role.enum";
+import { Gamelist } from "@app/users/domain/entities/gamelist.entity";
 
 @Entity('users')
 export class User {
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,6 +25,9 @@ export class User {
 
   @Column()
   discord_id: string;
+
+  @OneToMany(() => Gamelist, gl => gl.user)
+  gameList: Gamelist[];
 
   @CreateDateColumn()
   created_at: Date;
