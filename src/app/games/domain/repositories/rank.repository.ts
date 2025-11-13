@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Rank } from "@app/games/ranks/domain/entities/rank.entity";
+import { Rank } from "@app/games/domain/entities/rank.entity";
 import { Repository } from "typeorm";
 
 @Injectable()

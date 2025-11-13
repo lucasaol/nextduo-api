@@ -3,9 +3,9 @@ import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { LoadGameInterceptor } from "@app/games/helpers/interceptors/load-game.interceptor";
 import { CurrentGame } from "@app/games/helpers/decorators/current-game.decorator";
 import { Game } from "@app/games/domain/entities/game.entity";
-import { ReorderRanksDto } from "@app/games/ranks/dto/reorder-ranks.dto";
-import { ReorderRanksUseCase } from "@app/games/ranks/application/use-cases/reorder-ranks.use-case";
-import { RankService } from "@app/games/ranks/application/services/rank.service";
+import { ReorderRanksDto } from "@app/games/dto/reorder-ranks.dto";
+import { ReorderRanksUseCase } from "@app/games/application/use-cases/reorder-ranks.use-case";
+import { RankService } from "@app/games/application/services/rank.service";
 import { UserRole } from "@app/users/enums/user-role.enum";
 import { Roles } from "@app/auth/helpers/decorators/roles.decorator";
 

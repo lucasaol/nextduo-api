@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { User } from "@app/users/domain/entities/user.entity";
 import { Game } from "@app/games/domain/entities/game.entity";
-import { Rank } from "@app/games/ranks/domain/entities/rank.entity";
+import { Rank } from "@app/games/domain/entities/rank.entity";
 import { Exclude } from "class-transformer";
 
 @Entity("gamelist")

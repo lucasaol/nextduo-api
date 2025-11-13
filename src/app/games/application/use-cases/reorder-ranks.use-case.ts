@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { RankService } from "@app/games/ranks/application/services/rank.service";
-import { ReorderRanksDto } from "@app/games/ranks/dto/reorder-ranks.dto";
-import { Rank } from "@app/games/ranks/domain/entities/rank.entity";
+import { RankService } from "@app/games/application/services/rank.service";
+import { ReorderRanksDto } from "@app/games/dto/reorder-ranks.dto";
+import { Rank } from "@app/games/domain/entities/rank.entity";
 
 @Injectable()
 export class ReorderRanksUseCase {

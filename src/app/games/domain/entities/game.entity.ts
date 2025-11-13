@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Rank } from "@app/games/ranks/domain/entities/rank.entity";
+import { Rank } from "@app/games/domain/entities/rank.entity";
 
 @Entity('games')
 export class Game {
