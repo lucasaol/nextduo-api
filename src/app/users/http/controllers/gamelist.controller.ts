@@ -2,8 +2,6 @@ import { Body, Controller, Get, Post, UseGuards, UseInterceptors } from '@nestjs
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { CurrentUser } from "@app/auth/helpers/decorators/current-user.decorator";
 import { User } from "@app/users/domain/entities/user.entity";
-import { Roles } from "@app/auth/helpers/decorators/roles.decorator";
-import { UserRole } from "@app/users/enums/user-role.enum";
 import { AddGameToListDto } from "@app/users/dto/add-game-to-list.dto";
 import { CurrentGame } from "@app/games/helpers/decorators/current-game.decorator";
 import { Game } from "@app/games/domain/entities/game.entity";
