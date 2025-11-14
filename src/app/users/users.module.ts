@@ -11,6 +11,7 @@ import { AddGameToListUseCase } from '@app/users/application/use-cases/add-game-
 import { GamelistService } from "@app/users/application/services/gamelist.service";
 import { GamelistRepository } from "@app/users/domain/repositories/gamelist.repository";
 import { RemoveGameFromListUseCase } from "@app/users/application/use-cases/remove-game-from-list.use-case-ts";
+import { UpdateGameInListUseCase } from "@app/users/application/use-cases/update-game-in-list.use-case";
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { RemoveGameFromListUseCase } from "@app/users/application/use-cases/remo
   controllers: [UserController, GameListController],
   providers: [
     UserService, UserRepository,
-    GamelistService, GamelistRepository, AddGameToListUseCase, RemoveGameFromListUseCase
+    GamelistService, GamelistRepository,
+    AddGameToListUseCase, RemoveGameFromListUseCase, UpdateGameInListUseCase
   ],
   exports: [UserService],
 })

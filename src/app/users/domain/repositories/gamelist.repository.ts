@@ -24,6 +24,10 @@ export class GamelistRepository {
     return await this.orm.save(newGame)
   }
 
+  async update(game: Gamelist): Promise<Gamelist>  {
+    return await this.orm.save(game);
+  }
+
   async remove(id: string) {
     await this.orm.delete(id);
   }

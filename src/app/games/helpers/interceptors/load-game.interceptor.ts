@@ -19,6 +19,9 @@ export class LoadGameInterceptor implements NestInterceptor {
    intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const gameId = request.params.gameId;
+    if (!gameId) {
+      return next.handle();
+    }
     if (!isUUID(gameId)) {
       throw new BadRequestException('Validation failed (uuid is expected)');
     }

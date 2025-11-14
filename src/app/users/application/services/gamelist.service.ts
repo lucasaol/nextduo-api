@@ -18,6 +18,10 @@ export class GamelistService {
     return this.repo.add(newGame);
   }
 
+  async update(game: Gamelist) {
+    return this.repo.update(game);
+  }
+
   async remove(list: Gamelist) {
     return this.repo.remove(list.id);
   }
