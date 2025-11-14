@@ -11,8 +11,11 @@ export class RankRepository {
     private readonly orm: Repository<Rank>)
   { }
 
-  async create(rank: Rank): Promise<Rank> {
-    return await this.orm.save(rank);
+  async create(gameId: string, rank: Rank): Promise<Rank> {
+    return await this.orm.save({
+      ...rank,
+      game_id: gameId,
+    });
   }
 
   async findByGameId(gameId: string): Promise<Rank[]> {

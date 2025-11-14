@@ -9,9 +9,10 @@ import { UpdateGameUseCase } from "@app/games/application/use-cases/update-game.
 import { LoadGameInterceptor } from "@app/games/helpers/interceptors/load-game.interceptor";
 import { RankService } from "@app/games/application/services/rank.service";
 import { RankRepository } from "@app/games/domain/repositories/rank.repository";
-import { ReorderRanksUseCase } from "@app/games/application/use-cases/reorder-ranks.use-case";
+import { ReorderRanksUseCase } from "@app/games/application/use-cases/ranks/reorder-ranks.use-case";
 import { RankController } from "@app/games/http/controllers/rank.controller";
 import { Rank } from "@app/games/domain/entities/rank.entity";
+import { CreateRankUseCase } from '@app/games/application/use-cases/ranks/create-rank.use-case';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Rank } from "@app/games/domain/entities/rank.entity";
     LoadGameInterceptor,
     RankService,
     RankRepository,
+    CreateRankUseCase,
     ReorderRanksUseCase
   ],
   exports: [
