@@ -23,7 +23,10 @@ export class AuthenticateUsingDiscordUseCase {
     let user = await this.users.findByDiscordId(discordUser.id);
     if (!user) {
       user = await this.createUserWithDiscordInfo(discordUser);
+    } else {
+      this.updateLastLogin(user)
     }
+
 
     const payload: JwtPayload = {
       sub: user.id,
@@ -45,6 +48,10 @@ export class AuthenticateUsingDiscordUseCase {
     );
 
     return await this.users.create(userDto);
+  }
+
+  private async updateLastLogin(user: User): Promise<void> {
+    return await this.users.updateLastLogin(user);
   }
 
 }
