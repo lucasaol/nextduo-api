@@ -6,6 +6,7 @@ import { RequestValidatorModule } from "@app/shared/validator/request-validator.
 import { AuthModule } from "@app/auth/auth.module";
 import { envSchema } from "./env";
 import { GamesModule } from '@app/games/games.module';
+import { InvitesModule } from "@app/invites/invites.module";
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { GamesModule } from '@app/games/games.module';
     RequestValidatorModule,
     UsersModule,
     AuthModule,
-    GamesModule
+    GamesModule,
+    InvitesModule
   ],
 })
 export class AppModule {}

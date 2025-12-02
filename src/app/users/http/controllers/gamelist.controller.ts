@@ -21,7 +21,7 @@ import { AddGameToListUseCase } from '@app/users/application/use-cases/add-game-
 import { RemoveGameFromListUseCase } from "@app/users/application/use-cases/remove-game-from-list.use-case-ts";
 import { UpdateGameInListUseCase } from "@app/users/application/use-cases/update-game-in-list.use-case";
 
-@Controller("users/games")
+@Controller("users/me/games")
 @UseGuards(RolesGuard)
 @UseInterceptors(LoadGameInterceptor)
 export class GameListController {
