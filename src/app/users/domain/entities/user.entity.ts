@@ -29,6 +29,9 @@ export class User {
   @OneToMany(() => Gamelist, gl => gl.user)
   gameList: Gamelist[];
 
+  @Column()
+  last_login_at: Date;
+
   @CreateDateColumn()
   created_at: Date;
 
