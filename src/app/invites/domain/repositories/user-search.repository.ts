@@ -2,18 +2,22 @@ import { Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
 import { InjectDataSource } from "@nestjs/typeorm";
 
+export interface PaginatedCursorSearchUsers {
+  i: string;
+  d: Date
+}
 interface SearchUsersFilters {
   gameId?: string;
   rankIds?: string[];
   lastLoginDate?: Date;
   requesterId: string;
-  cursor?: string;
+  cursor?: PaginatedCursorSearchUsers;
 }
 
 @Injectable()
 export class UserSearchRepository {
 
-  private static readonly DEFAULT_LIMIT = 10;
+  static readonly DEFAULT_LIMIT = 24;
 
   constructor(
     @InjectDataSource()
@@ -28,7 +32,7 @@ export class UserSearchRepository {
       .innerJoin('gamelist', 'gl', 'gl.user_id = u.id')
       .innerJoin('games', 'g', 'gl.game_id = g.id')
       .innerJoin('ranks', 'r', 'gl.rank_id = r.id')
-      //.where('u.id != :requesterId', { requesterId });
+      .where('u.id != :requesterId', { requesterId });
 
     if (gameId) {
       query.andWhere('gl.game_id = :gameId', { gameId });
@@ -41,11 +45,18 @@ export class UserSearchRepository {
     }
 
     if (cursor) {
-      query.andWhere('u.id < :cursor', { cursor });
+      query.andWhere(`(
+        u.last_login_at < :cursorLastLogin
+        OR (u.last_login_at = :cursorLastLogin AND u.id < :cursorId)
+      )`, {
+        cursorLastLogin: cursor.d,
+        cursorId: cursor.i
+      });
     }
 
     query.orderBy('u.last_login_at', 'DESC')
-      .limit(UserSearchRepository.DEFAULT_LIMIT)
+      .addOrderBy('u.id', 'DESC')
+      .limit(UserSearchRepository.DEFAULT_LIMIT + 1)
 
     return await query.select([
       'u.id AS user_id',
@@ -61,7 +72,6 @@ export class UserSearchRepository {
       'r.id AS rank_id',
       'r.name AS rank_name',
       'r.icon AS rank_icon',
-
     ]).getRawMany();
   }
 
