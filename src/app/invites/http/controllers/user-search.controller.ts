@@ -11,8 +11,7 @@ export class UserSearchController {
 
   constructor(
     private readonly searchUsers: SearchUsersUseCase
-  ) {
-  }
+  ) {}
 
   @Get()
   async search(
