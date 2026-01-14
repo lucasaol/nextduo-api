@@ -20,7 +20,7 @@ export class RankController {
     private readonly createRank: CreateRankUseCase,
     private readonly orderRanks: ReorderRanksUseCase,
     private readonly service: RankService
-  ) { }
+  ) {}
 
   @Get()
   async findAll(

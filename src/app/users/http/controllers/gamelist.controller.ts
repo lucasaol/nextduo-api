@@ -30,8 +30,7 @@ export class GameListController {
     private readonly addGame: AddGameToListUseCase,
     private readonly updateGame: UpdateGameInListUseCase,
     private readonly removeGame: RemoveGameFromListUseCase
-  ) {
-  }
+  ) {}
 
   @Get()
   async myList(@CurrentUser() user: User) {
