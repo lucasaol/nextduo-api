@@ -8,9 +8,11 @@ export class RejectInviteUseCase extends UpdateInviteStatusUseCase {
   protected getPossibleStatus(): InviteStatus[] {
     return [InviteStatus.PENDING];
   }
+
   protected getStatusToUpdate(): InviteStatus {
     return InviteStatus.REJECTED;
   }
+
   protected checkUserCanExecute(): void {
     if (!this.checkUserReceived()) {
       throw new ForbiddenException('Cannot reject invite');
