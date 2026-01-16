@@ -12,6 +12,7 @@ import { InviteService } from "@app/invites/application/services/invite.service"
 import { Invite } from "@app/invites/domain/entities/invite.entity";
 import { AcceptInviteUseCase } from "@app/invites/application/use-cases/change-status/accept-invite.use-case";
 import { RejectInviteUseCase } from "@app/invites/application/use-cases/change-status/reject-invite.use-case";
+import { CancelInviteUseCase } from "@app/invites/application/use-cases/change-status/cancel-invite.use-case";
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { RejectInviteUseCase } from "@app/invites/application/use-cases/change-s
     UserSearchRepository,
     InviteService, InviteRepository,
     SearchUsersUseCase, CreateInviteUseCase,
-    AcceptInviteUseCase, RejectInviteUseCase
+    AcceptInviteUseCase, RejectInviteUseCase, CancelInviteUseCase
   ]
 })
 export class InvitesModule { }

@@ -3,7 +3,7 @@ import { UpdateInviteStatusUseCase } from "@app/invites/application/use-cases/ch
 import { InviteStatus } from "@src/app/invites/enums/invite-status.enum";
 
 @Injectable()
-export class AcceptInviteUseCase extends UpdateInviteStatusUseCase {
+export class CancelInviteUseCase extends UpdateInviteStatusUseCase {
 
   protected getPossibleStatus(): InviteStatus[] {
     return [InviteStatus.PENDING];
@@ -14,7 +14,7 @@ export class AcceptInviteUseCase extends UpdateInviteStatusUseCase {
   }
 
   protected checkUserCanExecute(): void {
-    if (!this.checkUserReceived()) {
+    if (!this.checkUserRequested()) {
       throw new ForbiddenException('Cannot cancel invite');
     }
   }
