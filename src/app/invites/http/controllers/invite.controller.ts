@@ -5,6 +5,7 @@ import { CreateInviteDto } from "@app/invites/dto/create-invite.dto";
 import { RolesGuard } from "@app/auth/helpers/guards/roles.guard";
 import { CreateInviteUseCase } from "@app/invites/application/use-cases/create-invite.use-case";
 import { AcceptInviteUseCase } from "@app/invites/application/use-cases/change-status/accept-invite.use-case";
+import { RejectInviteUseCase } from "@app/invites/application/use-cases/change-status/reject-invite.use-case";
 
 @Controller('invites')
 @UseGuards(RolesGuard)
@@ -13,6 +14,7 @@ export class InviteController {
   constructor(
     private readonly createInvite: CreateInviteUseCase,
     private readonly acceptInvite: AcceptInviteUseCase,
+    private readonly rejectInvite: RejectInviteUseCase
   ) {}
 
   @Post()
@@ -35,8 +37,11 @@ export class InviteController {
 
   @Put('/:id/reject')
   async reject(
-    @CurrentUser() user: User
-  ) {  }
+    @CurrentUser() currentUser: User,
+    @Param('id') inviteId: string
+  ) {
+    return await this.rejectInvite.execute({inviteId, user: currentUser});
+  }
 
   @Put('/:id/cancel')
   async cancel(

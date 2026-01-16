@@ -16,7 +16,7 @@ export abstract class UpdateInviteStatusUseCase {
 
   protected abstract getStatusToUpdate(): InviteStatus;
 
-  protected abstract checkUserCanExecute(): boolean;
+  protected abstract checkUserCanExecute(): void;
 
   protected async getInviteById(inviteId: string): Promise<Invite> {
     const invite = await this.service.findById(inviteId);
@@ -33,7 +33,7 @@ export abstract class UpdateInviteStatusUseCase {
     this.checkStatus();
     this.checkUserCanExecute();
 
-    const newStatus = await this.getStatusToUpdate();
+    const newStatus = this.getStatusToUpdate();
     await this.service.changeStatus(this.invite, newStatus);
     return { status: newStatus };
   }
