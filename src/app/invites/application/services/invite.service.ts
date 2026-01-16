@@ -30,11 +30,11 @@ export class InviteService {
     await this.repo.update(invite);
   }
 
-  async findRequested(userId) {
+  async findRequested(userId: string) {
     return await this.repo.findRequestedByUserId(userId);
   }
 
-  async findRequests(userId) {
+  async findReceived(userId: string) {
     return await this.repo.findReceivedByUserId(userId);
   }
 

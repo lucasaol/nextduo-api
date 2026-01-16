@@ -10,7 +10,9 @@ export abstract class UpdateInviteStatusUseCase {
   private invite: Invite;
   private user: User;
 
-  public constructor(protected readonly service: InviteService) {}
+  constructor(
+    protected readonly service: InviteService
+  ) {}
 
   protected abstract getPossibleStatus(): InviteStatus[];
 
@@ -35,7 +37,7 @@ export abstract class UpdateInviteStatusUseCase {
 
     const newStatus = this.getStatusToUpdate();
     await this.service.changeStatus(this.invite, newStatus);
-    return { status: newStatus };
+    return this.invite;
   }
 
   private checkStatus() {

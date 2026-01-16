@@ -18,6 +18,12 @@ export class Invite {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ type: 'enum', enum: InviteStatus, default: InviteStatus.PENDING })
+  status: string;
+
+  @Column()
+  message?: string;
+
   @Column()
   from_user_id: string;
 
@@ -38,12 +44,6 @@ export class Invite {
   @ManyToOne(() => Game, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'game_id' })
   game: Game;
-
-  @Column()
-  message?: string;
-
-  @Column({ type: 'enum', enum: InviteStatus, default: InviteStatus.PENDING })
-  status: string;
 
   @CreateDateColumn()
   created_at: Date;

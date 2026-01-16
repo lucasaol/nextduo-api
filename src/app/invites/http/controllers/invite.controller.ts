@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CurrentUser } from "@app/auth/helpers/decorators/current-user.decorator";
 import { User } from "@app/users/domain/entities/user.entity";
 import { CreateInviteDto } from "@app/invites/dto/create-invite.dto";
@@ -7,6 +7,7 @@ import { CreateInviteUseCase } from "@app/invites/application/use-cases/create-i
 import { AcceptInviteUseCase } from "@app/invites/application/use-cases/change-status/accept-invite.use-case";
 import { RejectInviteUseCase } from "@app/invites/application/use-cases/change-status/reject-invite.use-case";
 import { CancelInviteUseCase } from "@app/invites/application/use-cases/change-status/cancel-invite.use-case";
+import { ListInvitesUseCase } from "@app/invites/application/use-cases/list-invites.use-case";
 
 @Controller('invites')
 @UseGuards(RolesGuard)
@@ -14,6 +15,7 @@ export class InviteController {
 
   constructor(
     private readonly createInvite: CreateInviteUseCase,
+    private readonly listInvites: ListInvitesUseCase,
     private readonly acceptInvite: AcceptInviteUseCase,
     private readonly rejectInvite: RejectInviteUseCase,
     private readonly cancelInvite: CancelInviteUseCase,
@@ -22,11 +24,26 @@ export class InviteController {
   @Post()
   async create(
     @CurrentUser() user: User,
-    @Body() body: CreateInviteDto) {
+    @Body() body: CreateInviteDto
+  ) {
     await this.createInvite.execute({
       ...body,
       currentUser: user
     })
+  }
+
+  @Get('/received')
+  async listReceivedInvites(
+    @CurrentUser() user: User
+  ) {
+    return await this.listInvites.received(user);
+  }
+
+  @Get('/requested')
+  async listRequestedInvites(
+    @CurrentUser() user: User
+  ) {
+    return await this.listInvites.requested(user);
   }
 
   @Put('/:id/accept')
