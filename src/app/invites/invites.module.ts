@@ -10,6 +10,7 @@ import { CreateInviteUseCase } from "@app/invites/application/use-cases/create-i
 import { InviteRepository } from "@app/invites/domain/repositories/invite.repository";
 import { InviteService } from "@app/invites/application/services/invite.service";
 import { Invite } from "@app/invites/domain/entities/invite.entity";
+import { AcceptInviteUseCase } from "@app/invites/application/use-cases/change-status/accept-invite.use-case";
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { Invite } from "@app/invites/domain/entities/invite.entity";
   providers: [
     UserSearchRepository,
     InviteService, InviteRepository,
-    SearchUsersUseCase, CreateInviteUseCase
+    SearchUsersUseCase, CreateInviteUseCase, AcceptInviteUseCase
   ]
 })
 export class InvitesModule { }
