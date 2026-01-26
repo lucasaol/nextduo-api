@@ -1,0 +1,18 @@
+# git repository
+.git
+.github
+
+# IDEs and editors
+.vscode
+.idea
+
+# compiled output
+node_modules
+dist
+
+# OS
+.DS_Store
+
+# docs
+!.env.example
+*.md
