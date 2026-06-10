@@ -10,7 +10,7 @@ export class AcceptInviteUseCase extends UpdateInviteStatusUseCase {
   }
 
   protected getStatusToUpdate(): InviteStatus {
-    return InviteStatus.CANCELLED;
+    return InviteStatus.ACCEPTED;
   }
 
   protected checkUserCanExecute(): void {
