@@ -12,7 +12,6 @@ import { Game } from "@app/games/domain/entities/game.entity";
 import { LoadGameInterceptor } from "@app/games/helpers/interceptors/load-game.interceptor";
 
 @Controller('games')
-@UseGuards(RolesGuard)
 export class GameController {
 
   constructor(
@@ -27,6 +26,7 @@ export class GameController {
   }
 
   @Get(':gameId')
+  @UseGuards(RolesGuard)
   @UseInterceptors(LoadGameInterceptor)
   async findOne(
     @CurrentGame() game: Game
@@ -35,6 +35,7 @@ export class GameController {
   }
 
   @Post()
+  @UseGuards(RolesGuard)
   @Roles(UserRole.ROOT)
   async create(
     @Body() body: CreateGameDto
@@ -43,6 +44,7 @@ export class GameController {
   }
 
   @Patch(':id')
+  @UseGuards(RolesGuard)
   @Roles(UserRole.ROOT)
   @UseInterceptors(LoadGameInterceptor)
   async update(
