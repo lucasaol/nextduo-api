@@ -157,18 +157,3 @@ monorepo que orquestra a API e o front-end juntos.
 # a partir desta pasta (API + Postgres)
 docker compose up --build
 ```
-
-## Scripts úteis
-
-| Script | Descrição |
-| --- | --- |
-| `npm run start:dev` | Inicia a API em modo watch |
-| `npm run start:prod` | Inicia a build de produção (`dist/main`) |
-| `npm run build` | Compila o projeto (NestJS) |
-| `npm run lint` | ESLint com `--fix` |
-| `npm run format` | Formata o código com Prettier |
-| `npm test` | Testes unitários (Jest) |
-| `npm run test:e2e` | Testes end-to-end |
-| `npm run test:cov` | Cobertura de testes |
-| `npm run migration:run` | Builda e aplica as migrations |
-| `npm run migration:create --name=<nome>` | Cria uma nova migration |
