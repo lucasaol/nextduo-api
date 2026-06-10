@@ -37,7 +37,7 @@ export class SearchUsersUseCase {
         i: parsed.i ?? null
       }
     }
-    let rows = await this.repo.search({
+    const rows = await this.repo.search({
       gameId: params.game_id,
       rankIds: params.rank_ids,
       requesterId: params.requester.id,
@@ -45,47 +45,51 @@ export class SearchUsersUseCase {
       cursor,
     });
 
-    let nextCursor: string | null = null;
-    if (rows.length > UserSearchRepository.DEFAULT_LIMIT) {
-      const last = rows[rows.length - 1];
-
-      const cursorData = {
-        i: last.user_id,
-        d: new Date(last.user_last_login),
-      }
-      nextCursor = Buffer.from(JSON.stringify(cursorData)).toString('base64');
-      rows = rows.slice(0,UserSearchRepository.DEFAULT_LIMIT);
-    }
-
     const usersMap = new Map<string, any>();
     for (const row of rows) {
-      if (!usersMap.has(row.user_id)) {
-        usersMap.set(row.user_id, {
+      let user = usersMap.get(row.user_id);
+      if (!user) {
+        user = {
           id: row.user_id,
           name: row.user_name,
           avatar: row.user_avatar,
           last_login_at: row.user_last_login,
           gameList: []
-        });
-
-        usersMap.get(row.user_id).gameList.push({
-          id: row.gamelist_id,
-          game: {
-            id: row.game_id,
-            name: row.game_name,
-            image: row.game_image,
-          },
-          rank: {
-            id: row.rank_id,
-            name: row.rank_name,
-            icon: row.rank_icon,
-          }
-        })
+        };
+        usersMap.set(row.user_id, user);
       }
+
+      user.gameList.push({
+        id: row.gamelist_id,
+        game: {
+          id: row.game_id,
+          name: row.game_name,
+          image: row.game_image,
+        },
+        rank: {
+          id: row.rank_id,
+          name: row.rank_name,
+          icon: row.rank_icon,
+        }
+      });
+    }
+
+    let users = [...usersMap.values()];
+
+    let nextCursor: string | null = null;
+    if (users.length > UserSearchRepository.DEFAULT_LIMIT) {
+      users = users.slice(0, UserSearchRepository.DEFAULT_LIMIT);
+      const last = users[users.length - 1];
+
+      const cursorData = {
+        i: last.id,
+        d: new Date(last.last_login_at),
+      }
+      nextCursor = Buffer.from(JSON.stringify(cursorData)).toString('base64');
     }
 
     return {
-      data: [...usersMap.values()],
+      data: users,
       nextCursor,
     }
   }

@@ -20,15 +20,13 @@ export class UserRepository {
   }
 
   async findById(id: string): Promise<User|null> {
-    return await this.orm.findOne({
-        where: { id },
-        relations: {
-          gameList: {
-            game: true,
-            rank: true
-          },
-        },
-      });
+    return await this.orm
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.gameList', 'gameList')
+      .leftJoinAndSelect('gameList.game', 'game')
+      .leftJoinAndSelect('gameList.rank', 'rank')
+      .where('user.id = :id', { id })
+      .getOne();
   }
 
   async findByDiscordId(id: string): Promise<User|null> {

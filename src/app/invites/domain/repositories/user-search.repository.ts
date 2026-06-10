@@ -27,25 +27,25 @@ export class UserSearchRepository {
   async search(filters: SearchUsersFilters) {
     const { gameId, rankIds, requesterId, lastLoginDate, cursor } = filters;
 
-    const query = this.db.createQueryBuilder()
+    // Phase 1: select the page of users matching the filters (one row per user).
+    const pageQuery = this.db.createQueryBuilder()
+      .select('u.id', 'id')
       .from('users', 'u')
       .innerJoin('gamelist', 'gl', 'gl.user_id = u.id')
-      .innerJoin('games', 'g', 'gl.game_id = g.id')
-      .innerJoin('ranks', 'r', 'gl.rank_id = r.id')
       .where('u.id != :requesterId', { requesterId });
 
     if (gameId) {
-      query.andWhere('gl.game_id = :gameId', { gameId });
+      pageQuery.andWhere('gl.game_id = :gameId', { gameId });
     }
     if (rankIds) {
-      query.andWhere('gl.rank_id IN (:...rankIds)', { rankIds });
+      pageQuery.andWhere('gl.rank_id IN (:...rankIds)', { rankIds });
     }
     if (lastLoginDate) {
-      query.andWhere('u.last_login_at >= :lastLoginDate', { lastLoginDate });
+      pageQuery.andWhere('u.last_login_at >= :lastLoginDate', { lastLoginDate });
     }
 
     if (cursor) {
-      query.andWhere(`(
+      pageQuery.andWhere(`(
         u.last_login_at < :cursorLastLogin
         OR (u.last_login_at = :cursorLastLogin AND u.id < :cursorId)
       )`, {
@@ -54,25 +54,42 @@ export class UserSearchRepository {
       });
     }
 
-    query.orderBy('u.last_login_at', 'DESC')
+    pageQuery.groupBy('u.id')
+      .orderBy('u.last_login_at', 'DESC')
       .addOrderBy('u.id', 'DESC')
-      .limit(UserSearchRepository.DEFAULT_LIMIT + 1)
+      .limit(UserSearchRepository.DEFAULT_LIMIT + 1);
 
-    return await query.select([
-      'u.id AS user_id',
-      'u.name AS user_name',
-      'u.avatar AS user_avatar',
-      'u.last_login_at AS user_last_login',
+    const page = await pageQuery.getRawMany();
+    const userIds = page.map((row) => row.id);
 
-      'gl.id AS gamelist_id',
-      'g.id AS game_id',
-      'g.name AS game_name',
-      'g.image AS game_image',
+    if (userIds.length === 0) {
+      return [];
+    }
 
-      'r.id AS rank_id',
-      'r.name AS rank_name',
-      'r.icon AS rank_icon',
-    ]).getRawMany();
+    // Phase 2: fetch the COMPLETE gameList for each user in the page.
+    return await this.db.createQueryBuilder()
+      .from('users', 'u')
+      .innerJoin('gamelist', 'gl', 'gl.user_id = u.id')
+      .innerJoin('games', 'g', 'gl.game_id = g.id')
+      .innerJoin('ranks', 'r', 'gl.rank_id = r.id')
+      .where('u.id IN (:...userIds)', { userIds })
+      .orderBy('u.last_login_at', 'DESC')
+      .addOrderBy('u.id', 'DESC')
+      .select([
+        'u.id AS user_id',
+        'u.name AS user_name',
+        'u.avatar AS user_avatar',
+        'u.last_login_at AS user_last_login',
+
+        'gl.id AS gamelist_id',
+        'g.id AS game_id',
+        'g.name AS game_name',
+        'g.image AS game_image',
+
+        'r.id AS rank_id',
+        'r.name AS rank_name',
+        'r.icon AS rank_icon',
+      ]).getRawMany();
   }
 
 }
