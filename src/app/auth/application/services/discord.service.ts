@@ -26,6 +26,17 @@ export class DiscordService {
     });
   }
 
+  getAuthorizationUrl() {
+    const params = new URLSearchParams({
+      client_id: this.clientId,
+      redirect_uri: this.redirectUri,
+      response_type: 'code',
+      scope: 'identify email',
+    });
+
+    return `${this.baseUrl}/oauth2/authorize?${params.toString()}`;
+  }
+
   private async getAccessToken(authorizationCode: string) {
     try {
       const params = new URLSearchParams({
@@ -39,9 +50,11 @@ export class DiscordService {
       const { data } = await this.api.post("/oauth2/token", params, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       });
+      console.log(data);
 
       return data.access_token;
     } catch(e) {
+      console.log(e);
       throw new UnauthorizedException('Invalid authorization code.');
     }
   }

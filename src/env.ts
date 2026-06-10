@@ -5,7 +5,7 @@ export const envSchema = z.object({
   PORT: z.coerce.number().optional().default(3333),
 
   DB_HOST: z.string(),
-  DB_PORT: z.coerce.number().optional().default(5432),
+  DB_PORT: z.coerce.number().optional().default(5435),
   DB_USER: z.string(),
   DB_PASS: z.string(),
   DB_NAME: z.string(),
@@ -17,6 +17,7 @@ export const envSchema = z.object({
   DISCORD_API_CLIENT_SECRET: z.string(),
   DISCORD_API_BASE_URL: z.url(),
   DISCORD_API_REDIRECT_URI: z.url(),
+  DISCORD_AUTH_SUCCESS_REDIRECT_URL: z.url(),
 });
 
 export type Env = z.infer<typeof envSchema>;

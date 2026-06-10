@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run migration:run
+# RUN npm run migration:run
 
 EXPOSE 3333
 CMD ["npm", "run", "start:dev"]

@@ -44,3 +44,10 @@ services:
       resources:
         limits:
           cpus: '1'
+
+networks:
+  duo-network:
+    driver: bridge
+
+volumes:
+  pgdata:
